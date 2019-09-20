@@ -1,0 +1,164 @@
+<%- model_class = SwaziVisitorInfo -%>
+<div class="page-header">
+
+
+<script>
+
+$(document).on('page:change', function () {
+    $('#start_date').datepicker({
+         
+        changeMonth: true,
+        changeYear: true,
+        dateFormat: "yy-mm-dd",
+        yearRange:  "1900:+0",
+        altFormat:  "yy-mm-dd",
+        duration:   "fast"
+        
+    }).datepicker("setDate", "0");
+});
+
+
+$(document).on('page:change', function () {
+    $('#end_date').datepicker({
+        changeMonth: true,
+        changeYear: true,
+        dateFormat: "yy-mm-dd",
+        yearRange:  "1900:+0",
+        altFormat:  "yy-mm-dd",
+        duration:   "fast"
+    }).datepicker("setDate", "0");
+});
+
+
+</script>
+
+
+  <h1>Swazi Visitors</h1>
+</div>
+
+
+<div class="col-lg-12">
+<div class="well">
+<b>Filter by date and establishment below</b>
+<br><br>
+<%= form_tag swazi_visitor_infos_path, method: :get do %>
+
+From : <%=  text_field_tag("start_date") %>
+
+To :
+
+<%= text_field_tag("end_date") %>
+
+<select name="search">
+      <option value="">Please select establishment</option>
+      <%= @users.each do |u| %>
+
+      <% Establishment.where(:id => u.establishment_id  ).each do |z| %>
+
+        <option :search, params[:search] value="<%= u.id %>"> <%= z.name %> </option>
+       <% end %>
+      <% end %>
+    </select>
+
+
+<%= button_tag :class => "btn btn-info btn-sm" do  %>
+          <i class="fa fa-search">
+          </i>
+      <% end %>
+
+<% end %>
+
+<%-if(params[:start_date].present?) %> 
+
+<br>
+<br>
+Search results between <b style="color:#f00;"><%= params[:start_date] %></b>  and  <b style="color:#f00;"><%= params[:end_date] %></b>
+<% end %>
+
+</div>
+</div>
+
+<%= javascript_include_tag "//www.google.com/jsapi", "chartkick" %>
+
+<%-if  params[:start_date].blank? && params[:end_date].blank? && params[:search].blank? %>
+<div class="col-lg-4">
+To display information please use the filter above
+</div>
+<% else %>
+<div class="col-lg-12">
+<%= link_to swazi_visitor_infos_path(format: "csv") do %><span class="fa fa-file-text-o"></span> Download all reasons for visits to CSV<% end %>
+</div>
+
+<div class="col-lg-12">
+
+<div class="col-lg-4">
+<div class="well">
+<h4>Swazi visitors gender</h4>
+<%= high_chart("some_id2", @chart15) %>
+<p style="color:#78B4F2;">[ <%= $yy.to_i %> ] males
+[ <%= $zz.to_i %> ] female</p>
+</div>
+</div>
+
+
+
+<div class="col-lg-8">
+<div class="well">
+<h4>Swazi visitors age group</h4>
+<%= high_chart("some_id1", @chart16) %>
+
+<p style="color:#78B4F2; font-size:12px;">[ <%= $a11.to_i %> ] -18 [ <%= $a22.to_i %> ] 18-24  [ <%= $a33.to_i %> ] 25-34 [ <%= $a44.to_i %> ] 35-44 [ <%= $a55.to_i %> ] 45-54 [ <%= $a66.to_i %> ] 55-64 [ <%= $a77.to_i %> ] 65+yrs     </p>
+
+</div>
+</div>
+</div>
+
+
+<div class="col-lg-12">
+
+<div class="col-lg-4">
+<div class="well">
+<h4>Swazi visitors reasons for visit</h4>
+<%= high_chart("some_id7", @chart17) %>
+<p style="color:#78B4F2;">[ <%= $edu.to_i %> ] Educational
+[ <%= $recre.to_i %> ] Recreation [ <%= $rese.to_i %> ] Research [ <%= $other.to_i %> ] Other reasons</p>
+</div>
+</div>
+
+
+
+
+<div class="col-lg-8">
+<div class="well">
+<h4>Swazi visitors mode of transport</h4>
+<%= high_chart("some_id10", @chart18) %>
+
+<p style="color:#78B4F2; font-size:12px;">[ <%= $mode.to_i %> ]  Personal car [ <%= $mode1.to_i %> ]  Rental car [ <%= $mode2.to_i %> ]  Tour bus [ <%= $mode3.to_i %> ]  School bus [ <%= $mode4.to_i %> ]  Motor bike [ <%= $mode5.to_i %> ]  Other</p>
+
+</div>
+</div>
+
+</div>
+
+
+<div class="col-lg-4">
+<div class="well" style="height:500px;">
+<h4 style="color:#78B4F2;">Distance travelled by Swazi visitors to different tourist attraction centers (Groups and Individuals) in kilometres</h4>
+<%= pie_chart SwaziVisitorInfo.group(:place_of_residence).count %>
+</div>
+</div>
+
+<div class="col-lg-8">
+<div class="well">
+<h4>Swazi visitors travel partnership</h4>
+<%= high_chart("some_id11", @chart19) %>
+
+<p style="color:#78B4F2; font-size:12px;">[ <%= $part1.to_i %> ]  Individual [ <%= $part2.to_i %> ]  With colleagues [ <%= $part3.to_i %> ]  With friends & relatives [ <%= $part4.to_i %> ]  With spouse/partner [ <%= $part5.to_i %> ]  With family [ <%= $part6.to_i %> ]  With children [ <%= $part7.to_i %> ]  Packeged tour [ <%= $part8.to_i %> ]  School tour [ <%= $part9.to_i %> ]  Other</p>
+
+</div>
+</div>
+<% end %>
+
+
+
+

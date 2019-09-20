@@ -1,0 +1,166 @@
+<%= form_for @visitor_info, :html => { :class => "form-horizontal visitor_info" } do |f| %>
+
+    <% if @visitor_info.errors.any? %>
+    <div id="error_expl" class="panel panel-danger">
+      <div class="panel-heading">
+        <h3 class="panel-title"><%= pluralize(@visitor_info.errors.count, "error") %> prohibited this visitor_info from being saved:</h3>
+      </div>
+      <div class="panel-body">
+        <ul>
+        <% @visitor_info.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+        </ul>
+      </div>
+    </div>
+  <% end %>
+
+  <div class="control-group">
+    <%= f.label :name, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :name, :class => 'form-control' %>
+    </div>
+    <%= error_span(@visitor_info[:name]) %>
+  </div>
+  <div class="control-group">
+    <%= f.label :surname, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :surname, :class => 'form-control' %>
+    </div>
+    <%= error_span(@visitor_info[:surname]) %>
+  </div>
+  <div class="control-group">
+    <%= f.label :date_of_arrival, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :date_of_arrival, :class => 'form-control' %>
+    </div>
+    <%= error_span(@visitor_info[:date_of_arrival]) %>
+  </div>
+  <div class="control-group">
+    <%= f.label :reason_for_vist, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :reason_for_vist, :class => 'form-control' %>
+    </div>
+    <%= error_span(@visitor_info[:reason_for_vist]) %>
+  </div>
+  <div class="control-group">
+    <%= f.label :mode_of_transport, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :mode_of_transport, :class => 'form-control' %>
+    </div>
+    <%= error_span(@visitor_info[:mode_of_transport]) %>
+  </div>
+  <div class="control-group">
+    <%= f.label :gender, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :gender, :class => 'form-control' %>
+    </div>
+
+  <div class="control-group">
+    <%= f.label :male, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :male, :class => 'form-control' %>
+    </div>
+
+   <div class="control-group">
+    <%= f.label :female, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :female, :class => 'form-control' %>
+    </div>
+
+    <%= error_span(@visitor_info[:gender]) %>
+  </div>
+  <div class="control-group">
+    <%= f.label :travel, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :travel, :class => 'form-control' %>
+    </div>
+    <%= error_span(@visitor_info[:travel]) %>
+  </div>
+  <div class="control-group">
+    <%= f.label :partner, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :partner, :class => 'form-control' %>
+    </div>
+    <%= error_span(@visitor_info[:partner]) %>
+  </div>
+  <div class="control-group">
+    <%= f.label :citizenship, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :citizenship, :class => 'form-control' %>
+    </div>
+    <%= error_span(@visitor_info[:citizenship]) %>
+  </div>
+  <div class="control-group">
+    <%= f.label :country, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :country, :class => 'form-control' %>
+    </div>
+    <%= error_span(@visitor_info[:country]) %>
+  </div>
+  <div class="control-group">
+    <%= f.label :user_id, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :user_id, :class => 'form-control' %>
+    </div>
+    <%= error_span(@visitor_info[:user_id]) %>
+  </div>
+  <div class="control-group">
+    <%= f.label :Below_18, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :Below_18, :class => 'form-control' %>
+    </div>
+    <%= error_span(@visitor_info[:Below_18]) %>
+  </div>
+  <div class="control-group">
+    <%= f.label :age18_24, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :age18_24, :class => 'form-control' %>
+    </div>
+    <%= error_span(@visitor_info[:age18_24]) %>
+  </div>
+  <div class="control-group">
+    <%= f.label :age25_34, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :age25_34, :class => 'form-control' %>
+    </div>
+    <%= error_span(@visitor_info[:age25_34]) %>
+  </div>
+  <div class="control-group">
+    <%= f.label :age35_44, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :age35_44, :class => 'form-control' %>
+    </div>
+    <%= error_span(@visitor_info[:age35_44]) %>
+  </div>
+  <div class="control-group">
+    <%= f.label :age45_54, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :age45_54, :class => 'form-control' %>
+    </div>
+    <%= error_span(@visitor_info[:age45_54]) %>
+  </div>
+  <div class="control-group">
+    <%= f.label :age55_64, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :age55_64, :class => 'form-control' %>
+    </div>
+    <%= error_span(@visitor_info[:age55_64]) %>
+  </div>
+  <div class="control-group">
+    <%= f.label :age65, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :age65, :class => 'form-control' %>
+    </div>
+    <%= error_span(@visitor_info[:age65]) %>
+  </div>
+<br>
+<br>
+
+  <%= f.submit nil, :class => 'btn btn-primary' %>
+  <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
+            visitor_infos_path, :class => 'btn btn-default' %>
+
+<% end %>
+<br>
+<br>

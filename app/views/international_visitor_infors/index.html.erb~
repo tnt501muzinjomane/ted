@@ -1,0 +1,459 @@
+<%- model_class = InternationalVisitorInfor -%>
+<div class="page-header">
+  <center><h1>Visitors From Different Countries Across The Globe</h1></center>
+
+</div>
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
+
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+  <link rel="stylesheet" href="/resources/demos/style.css">
+  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+<script>
+
+$(document).on('page:change', function () {
+    $('#start_date').datepicker({
+         
+        changeMonth: true,
+        changeYear: true,
+        dateFormat: "yy-mm-dd",
+        yearRange:  "1900:+0",
+        altFormat:  "yy-mm-dd",
+        duration:   "fast"
+        
+    }).datepicker("setDate", "0");
+});
+
+
+$(document).on('page:change', function () {
+    $('#end_date').datepicker({
+        changeMonth: true,
+        changeYear: true,
+        dateFormat: "yy-mm-dd",
+        yearRange:  "1900:+0",
+        altFormat:  "yy-mm-dd",
+        duration:   "fast"
+    }).datepicker("setDate", "0");
+});
+
+
+</script>
+
+
+
+<div class="col-lg-12">
+<div class="well">
+
+<b>Filter by date and establishment below</b>
+<br><br>
+
+
+<%= form_tag international_visitor_infors_path, method: :get do %>
+
+From : <%=  text_field_tag("start_date") %>
+
+To :
+
+<%= text_field_tag("end_date") %>
+
+<select name="search">
+      <option value="">Please select establishment</option>
+      <%= @users.each do |u| %>
+
+      <% Establishment.where(:id => u.establishment_id  ).each do |z| %>
+
+        <option :search, params[:search] value="<%= u.id %>"> <%= z.name %> </option>
+       <% end %>
+      <% end %>
+    </select>
+
+<%= button_tag :class => "btn btn-info btn-sm" do  %>
+          <i class="fa fa-search">
+          </i>
+      <% end %>
+
+<% end %>
+
+
+
+<%-if(params[:start_date].present?) %> 
+
+<br>
+<br>
+Search results between <b style="color:#f00;"><%= params[:start_date] %></b>  and  <b style="color:#f00;"><%= params[:end_date] %></b>
+<% end %>
+
+
+</div>
+</div>
+
+
+<%= javascript_include_tag "//www.google.com/jsapi", "chartkick" %>
+
+<%-if  params[:start_date].blank? && params[:end_date].blank? && params[:search].blank? %>
+<div class="col-lg-4">
+To display information please use the filter above
+</div>
+<% else %>
+
+
+<div class="col-lg-12">
+<div class="well">
+<h4>Arrival by country (excluding Swazis)</h4>
+<%= high_chart("some_id337", @chart550) %>
+</div>
+</div>
+
+
+
+<div class="col-lg-12">
+<div class="well">
+<div  style="background-color:#ffffff;">
+<h4>Arrival by continent (excluding Swazis)</h4>
+<hr>
+<%= high_chart("some_id12", @chart12) %>
+<table class='table table-bordered'><tr><td>[ <%= $x.to_i %> ]  Africa </td> <td>[  <%= $x2.to_i %> ] Asia </td> <td>[ <%= $x1.to_i %> ]  America </td> <td> [ <%= $x3.to_i %> ]  Europe </td></tr></table>
+</div>
+</div>
+</div>
+
+
+<div class="col-lg-12">
+<div class="well">
+<h4>Reasons for visit (excluding Swazis)</h4>
+<%= high_chart("some_id7", @chart177) %>
+<p style="color:#78B4F2;">[ <%= $edu1.to_i %> ] Educational
+[ <%= $recre1.to_i %> ] Recreation [ <%= $rese1.to_i %> ] Research [ <%= $other1.to_i %> ] Other reasons</p>
+</div>
+</div>
+
+
+
+<div class="col-lg-6">
+<div class="well">
+<h4 style="color:#78B4F2;">
+
+Type of visitors (excluding Swazis)</h4>
+
+<%= high_chart("some_id1", @chart701) %>
+
+<p style="color:#78B4F2;">[ <%= $j.to_i %> ] individuals
+[ <%= $k.to_i %> ] group members</p>
+</div>
+</div>
+
+
+<div class="col-lg-6">
+<div class="well">
+<h4 style="color:#78B4F2;">Travel partnership  (excluding Swazis)</h4>
+<%= high_chart("some_id782", @chart630) %>
+
+<p style="color:#78B4F2;">[ <%= $pars.to_i %> ] Alone
+[ <%= $pars1.to_i %> ] With spouse/partner [ <%= $pars2.to_i %> ] With colleagues [ <%= $pars3.to_i %> ] With friends [ <%= $pars4.to_i %> ] With family [ <%= $pars5.to_i %> ] With children [ <%= $pars6.to_i %> ] With packaged tour [ <%= $pars7.to_i %> ] School tour [ <%= $pars8.to_i %> ] Other</p>
+
+</div>
+</div>
+
+<div class="col-lg-12">
+
+<div class="col-lg-6">
+<div class="well">
+<h4 style="color:#78B4F2;">Gender  (excluding Swazis)</h4>
+<%= high_chart("some_id7820", @chart15) %>
+<p style="color:#78B4F2;">[ <%= $yy.to_i %> ] Male visitors [ <%= $zz.to_i %> ] Female visitors</p>
+</div>
+</div>
+
+
+<div class="col-lg-6">
+<div class="well">
+<h4 style="color:#78B4F2;">Age group (excluding Swazis)
+
+</h4>
+<%= high_chart("some_id78280", @chart161) %>
+
+<p style="color:#78B4F2;">[ <%= $a11.to_i %> ] Below 18 [ <%= $a22.to_i %> ] 18-24 [ <%= $a33.to_i %> ] 25-34 [ <%= $a44.to_i %> ] 35-44 [ <%= $a55.to_i %> ] 45-54 [ <%= $a66.to_i %> ] 55-64 [ <%= $a77.to_i %> ] 65 above</p>
+
+</div>
+</div>
+</div>
+
+
+
+<div class="col-lg-12">
+<div class="well">
+  <%-if(@c.count > 0) %>  
+Search results between <b style="color:#f00;"><%= params[:start_date] %></b>  and  <b style="color:#f00;"><%= params[:end_date] %></b> for all the countries excluding Swaziland</b>
+<br>
+<br>
+
+<br>
+<br>
+<table class="table table-striped" id="x">
+  <thead>
+   
+    <tr>
+   
+      <th style="color:#f00;">Date of visit</th>
+      <th>Countries</th>
+      <th>Number of visitors</th>
+      <th>Establishment visited</th>
+     
+    
+    </tr>
+  </thead>
+  <tbody>
+    <% @c.each do |country| %>
+      <tr>
+        <td style="color:#f00;"><%= country.datev %></td>
+        <td><%= country.name %></td>
+        <td><%= country.num_v %></td>
+
+
+        <% VisitorInfo.where(:id => country.visitor_id ).each do |i| %>
+        <% User.where(:id => i.user_id ).each do |j| %>
+         <% Establishment.where(:id => j.establishment_id).each do |x| %>
+
+
+
+        <td><%= x.name %></td>
+        <% end %>
+        <% end %>
+        <% end %>
+      </tr>
+     
+    <% end %>
+
+    <% else %>
+      <p> No results found <b style="color:#f00;"><%= params[:start_date] %></b>  and  <b style="color:#f00;"><%= params[:start_date] %></b>
+
+    <% end %>
+     
+  </tbody>
+</table>
+
+
+
+
+<hr>
+
+<%= form_tag international_visitor_infors_path, method: :get do %>
+
+<%=  hidden_field_tag("start_date", value = params[:start_date]) %>
+
+
+
+<%= hidden_field_tag("end_date", value = params[:end_date]) %>
+
+<%= hidden_field_tag("search", value = params[:search])%>
+
+<%= hidden_field_tag("down", value = "Download")%>
+
+<%= button_tag :class => "btn btn-info btn-sm" do  %>
+          <i class="fa fa-download">
+          </i>
+      <% end %>
+
+<% end %>
+
+<hr>
+
+<% if params[:down].present? %>	
+      
+      <script>
+
+//table2excel.js
+;(function ( $, window, document, undefined ) {
+    var pluginName = "table2excel",
+
+    defaults = {
+        exclude: ".noExl",
+                name: "Table2Excel"
+    };
+
+    // The actual plugin constructor
+    function Plugin ( element, options ) {
+            this.element = element;
+            // jQuery has an extend method which merges the contents of two or
+            // more objects, storing the result in the first object. The first object
+            // is generally empty as we don't want to alter the default options for
+            // future instances of the plugin
+            //
+            this.settings = $.extend( {}, defaults, options );
+            this._defaults = defaults;
+            this._name = pluginName;
+            this.init();
+    }
+
+    Plugin.prototype = {
+        init: function () {
+            var e = this;
+
+			var utf8Heading = "<meta http-equiv=\"content-type\" content=\"application/vnd.ms-excel; charset=UTF-8\">";
+            e.template = {
+				head: "<html xmlns:o=\"urn:schemas-microsoft-com:office:office\" xmlns:x=\"urn:schemas-microsoft-com:office:excel\" xmlns=\"http://www.w3.org/TR/REC-html40\">" + utf8Heading + "<head><!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets>",
+                sheet: {
+                    head: "<x:ExcelWorksheet><x:Name>",
+                    tail: "</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet>"
+                },
+                mid: "</x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]--></head><body>",
+                table: {
+                    head: "<table>",
+                    tail: "</table>"
+                },
+                foot: "</body></html>"
+            };
+
+            e.tableRows = [];
+
+            // get contents of table except for exclude
+            $(e.element).each( function(i,o) {
+                var tempRows = "";
+                $(o).find("tr").not(e.settings.exclude).each(function (i,o) {
+                    tempRows += "<tr>" + $(o).html() + "</tr>";
+                });
+                e.tableRows.push(tempRows);
+            });
+
+            e.tableToExcel(e.tableRows, e.settings.name, e.settings.sheetName);
+        },
+
+        tableToExcel: function (table, name, sheetName) {
+            var e = this, fullTemplate="", i, link, a;
+
+            e.uri = "data:application/vnd.ms-excel;base64,";
+            e.base64 = function (s) {
+                return window.btoa(unescape(encodeURIComponent(s)));
+            };
+            e.format = function (s, c) {
+                return s.replace(/{(\w+)}/g, function (m, p) {
+                    return c[p];
+                });
+            };
+
+            sheetName = typeof sheetName === "undefined" ? "Sheet" : sheetName;
+
+            e.ctx = {
+                worksheet: name || "Worksheet",
+                table: table,
+                sheetName: sheetName,
+            };
+
+            fullTemplate= e.template.head;
+
+            if ( $.isArray(table) ) {
+                for (i in table) {
+                      //fullTemplate += e.template.sheet.head + "{worksheet" + i + "}" + e.template.sheet.tail;
+                      fullTemplate += e.template.sheet.head + sheetName + i + e.template.sheet.tail;
+                }
+            }
+
+            fullTemplate += e.template.mid;
+
+            if ( $.isArray(table) ) {
+                for (i in table) {
+                    fullTemplate += e.template.table.head + "{table" + i + "}" + e.template.table.tail;
+                }
+            }
+
+            fullTemplate += e.template.foot;
+
+            for (i in table) {
+                e.ctx["table" + i] = table[i];
+            }
+            delete e.ctx.table;
+
+            if (typeof msie !== "undefined" && msie > 0 || !!navigator.userAgent.match(/Trident.*rv\:11\./))      // If Internet Explorer
+            {
+                if (typeof Blob !== "undefined") {
+                    //use blobs if we can
+                    fullTemplate = [fullTemplate];
+                    //convert to array
+                    var blob1 = new Blob(fullTemplate, { type: "text/html" });
+                    window.navigator.msSaveBlob(blob1, getFileName(e.settings) );
+                } else {
+                    //otherwise use the iframe and save
+                    //requires a blank iframe on page called txtArea1
+                    txtArea1.document.open("text/html", "replace");
+                    txtArea1.document.write(e.format(fullTemplate, e.ctx));
+                    txtArea1.document.close();
+                    txtArea1.focus();
+                    sa = txtArea1.document.execCommand("SaveAs", true, getFileName(e.settings) );
+                }
+
+            } else {
+                link = e.uri + e.base64(e.format(fullTemplate, e.ctx));
+                a = document.createElement("a");
+                a.download = getFileName(e.settings);
+                a.href = link;
+
+                document.body.appendChild(a);
+
+                a.click();
+
+                document.body.removeChild(a);
+            }
+
+            return true;
+        }
+    };
+
+    function getFileName(settings) {
+		return ( settings.filename ? settings.filename : "table2excel" ) +
+			   ( settings.fileext ? settings.fileext : ".xlsx" );
+    }
+
+    $.fn[ pluginName ] = function ( options ) {
+        var e = this;
+            e.each(function() {
+                if ( !$.data( e, "plugin_" + pluginName ) ) {
+                    $.data( e, "plugin_" + pluginName, new Plugin( this, options ) );
+                }
+            });
+
+        // chain jQuery functions
+        return e;
+    };
+
+})( jQuery, window, document );
+
+
+
+
+
+
+
+
+			$(function() {
+				$("#x").table2excel({
+					exclude: ".noExl",
+					name: "Excel Document Name",
+					filename: "Exported Visitor Information Data",
+					fileext: ".xls",
+					exclude_img: true,
+					exclude_links: true,
+					exclude_inputs: true
+				});
+			});
+		</script> 
+<% end %>   
+</div>
+
+</div>
+
+<div class="col-lg-12">
+<div  style="background-color:#ffffff;" >
+<h4>Below map shows the different contries where our visitors come from</h4>
+<hr>
+<br><br>
+<%= geo_chart Country.group(:name).count%>
+
+
+</div>
+</div>
+<br>
+<br>
+
+<% end %>

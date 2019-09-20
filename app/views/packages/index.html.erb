@@ -1,0 +1,72 @@
+<%- model_class = Package -%>
+<div class="page-header">
+  <h1><%=t '.title', :default => model_class.model_name.human.pluralize.titleize %></h1>
+</div>
+
+   
+<div class="well">
+<%= form_tag packages_path, :method => 'get', :id => "packages_search" do %>
+   
+  <select name="search">
+      <option value="">Please select establishment</option>
+      <%= @estab.each do |u| %>
+
+        <option :search, params[:search] value="<%= u.id %>"><%= u.name %></option>
+     
+      <% end %>
+    </select>
+
+    <%= button_tag :class => "btn btn-info btn-sm" do  %>
+          <i class="fa fa-search">
+          </i>
+      <% end %>
+    
+<% end %>
+<hr>
+[ <%= @packages.count %> ] results 
+<br>
+<%= link_to packages_path(format: "csv") do %><span class="fa fa-file-text-o"></span> Export to CSV<% end %>
+
+</div>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th><%=  model_class.human_attribute_name(:id) %></th>
+      <th><%=  model_class.human_attribute_name(:name) %></th>
+      <th><%= sortable_two model_class.human_attribute_name(:cost) %></th>
+      <th><%=  model_class.human_attribute_name(:establishment_id) %></th>
+      <th><%= model_class.human_attribute_name(:created_at) %></th>
+      <th><%=t '.actions', :default => t("helpers.actions") %></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @packages.each do |package| %>
+      <tr>
+        <td><%= link_to package.id, package_path(package) %></td>
+        <td><%= package.name %></td>
+        <td><%= number_to_currency package.cost, unit: "E " %></td>
+        <td>
+
+        <% @establishments = Establishment.where(:id => package.establishment_id).each do |e| %>
+  <%= e.name %>
+  <% end %>
+
+        </td>
+        <td><%=l package.created_at %></td>
+        <td>
+          <%= link_to t('.edit', :default => t("helpers.links.edit")),
+                      edit_package_path(package), :class => 'btn btn-default btn-xs' %>
+          
+        <%= popupmsg_customize_link("Delete", "Deleting the package will remove it from the system. <p><br> Are you sure you want to continue?",package_path(package)) %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<%= will_paginate @packages, :class => 'flickr_pagination' %>
+<br>
+
+<%= link_to t('.new', :default => t("helpers.links.new")),
+            new_package_path,
+            :class => 'btn btn-primary' %>

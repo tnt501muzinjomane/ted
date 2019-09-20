@@ -1,0 +1,589 @@
+<%- model_class = VisitorInfo -%>
+<div class="page-header">
+  <h1>Visitors Information</h1>
+</div>
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
+
+
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+  <link rel="stylesheet" href="/resources/demos/style.css">
+  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+
+<script>
+
+$(document).on('page:change', function () {
+    $('#start_date').datepicker({
+         
+        changeMonth: true,
+        changeYear: true,
+        dateFormat: "yy-mm-dd",
+        yearRange:  "1900:+0",
+        altFormat:  "yy-mm-dd",
+        duration:   "fast"
+        
+    }).datepicker("setDate", "0");
+});
+
+
+$(document).on('page:change', function () {
+    $('#end_date').datepicker({
+        changeMonth: true,
+        changeYear: true,
+        dateFormat: "yy-mm-dd",
+        yearRange:  "1900:+0",
+        altFormat:  "yy-mm-dd",
+        duration:   "fast"
+    }).datepicker("setDate", "0");
+});
+
+
+</script>
+
+<div class="well">
+<b>Filter by date and establishment below</b>
+<br><br>
+<%= form_tag visitor_infos_path, method: :get do %>
+
+Start Date : <%=  text_field_tag("start_date") %>
+
+End Date :
+
+<%= text_field_tag("end_date") %>
+
+<select name="search">
+      <option value="">Please select establishment</option>
+      <%= @users.each do |u| %>
+
+      <% Establishment.where(:id => u.establishment_id  ).each do |z| %>
+
+        <option :search, params[:search] value="<%= u.id %>"> <%= z.name %> </option>
+       <% end %>
+      <% end %>
+    </select>
+
+<%= button_tag :class => "btn btn-info btn-sm" do  %>
+          <i class="fa fa-search">
+          </i>
+      <% end %>
+
+<% end %>
+
+
+  <hr>
+<%-if(@visitor_infos.count > 0) %>  
+[ <%= @visitor_infos.count %> ] result (s) <br>  
+
+      
+
+
+<br>
+Search results between <b style="color:#f00;"><%= params[:start_date] %></b>  and  <b style="color:#f00;"><%= params[:end_date] %></b>
+
+</div>
+
+<div class="table-responsive" id="tabl">
+<table class="table table-striped"  id="x" >
+  <thead>
+    <tr>
+     
+      <th style="color:#f00;"><%= model_class.human_attribute_name(:date_of_arrival) %></th>
+     
+      <th><%= model_class.human_attribute_name(:mode_of_transport) %></th>
+      <th>#</th>
+      <th style="color:#0066ff;">M</th>
+      <th style="color:#f00;">F</th>
+      <th>Type of visit</th>
+      <th>Travel partnership</th>
+      <th>#</th>
+      <th><%= model_class.human_attribute_name(:citizenship) %></th>
+
+      <th>Packages</p>
+      <th>#</th>
+      <th>Fee</th>
+      <th>Establishment visited</th>
+     
+      <th style="color:#f00;">-18</th>
+      <th style="color:#0066ff;">18-24</th>
+      <th style="color:#f00;">25-34 </th>
+      <th style="color:#0066ff;">35-44</th>
+      <th style="color:#f00;">45-54 </th>
+      <th style="color:#0066ff;">55-64</th>
+      <th style="color:#f00;">65+yrs</th>
+      <th style="color:#0066ff;">Sum</th>
+      <th style="color:#f00;">Country</th>
+      <th>#</th>
+      <th style="color:#0066ff;">Reasons</th>
+      <th>#</th>
+      <th style="color:#f00;">Distance (Swazis only)</th>
+      <th>#</th>
+      
+      
+    </tr>
+  </thead>
+
+<%-a = [] %>
+  <%-b = [] %>
+  <tbody>
+    <% @visitor_infos.each do |visitor_info| %>
+      <tr>
+       
+        <td style="color:#f00;"><%= visitor_info.date_of_arrival %></td>
+        
+        <td>
+
+
+        <% Transport.where(:visitor_id => visitor_info.id  ).each do |o| %>
+
+	    <% $jt = o.trans %>
+	    <% $tt = o.nump %>
+
+
+            <%= $jt  %> <br> 
+       
+       <% end %>
+
+
+</td>
+        <td>
+
+
+        <% Transport.where(:visitor_id => visitor_info.id  ).each do |o| %>
+
+	    <% $jt = o.trans %>
+	    <% $tt = o.nump %>
+
+
+             <%= $tt  %><br> 
+       
+       <% end %>
+
+
+</td>
+        <td style="color:#0066ff;"><%= visitor_info.male %></td>
+        <td style="color:#f00;"><%= visitor_info.female %></td>
+
+
+      
+        <td><%= visitor_info.travel %> </td>
+        <td>
+
+
+            <% Partnership.where(:visitor_id => visitor_info.id  ).each do |l| %>
+
+	    <% $jtt = l.partnership %>
+	    <% $ttt = l.nump %>
+
+          
+            <%= $jtt  %> <br> 
+       
+            <% end %>
+
+
+
+
+</td>
+        <td><% Partnership.where(:visitor_id => visitor_info.id  ).each do |l| %>
+
+	    <% $jtt = l.partnership %>
+	    <% $ttt = l.nump %>
+
+             <% $re = visitor_info.citizenship %>
+             <%= $ttt  %><br> 
+       
+            <% end %></td>
+
+            <% $rc = visitor_info.citizenship %>
+
+        <td><%= visitor_info.citizenship %></td>
+        <td>
+
+        <% VisitorPackage.where(:visitor_infor_id => visitor_info.id  ).each do |p| %>
+        <% Package.where(:id => p.package_id  ).each do |q| %>
+
+         <%= q.name  %> <br>
+
+
+        <% end %>
+        <% end %>
+
+
+
+
+</td>
+
+<td>
+
+        <% VisitorPackage.where(:visitor_infor_id => visitor_info.id  ).each do |p| %>
+        <% Package.where(:id => p.package_id  ).each do |q| %>
+
+      
+
+         <%= p.num_visitor  %> <br>
+
+         
+     
+
+
+        <% end %>
+        <% end %>
+
+
+
+
+</td>
+
+
+<td>
+
+        <% VisitorPackage.where(:visitor_infor_id => visitor_info.id  ).each do |p| %>
+        <% Package.where(:id => p.package_id  ).each do |q| %>
+
+         <%-$rf = q.cost %>
+       
+             
+
+         <%= number_to_currency $rf , unit: "E " %><br>
+         <% b << $rf.to_f %>
+        <% end %>
+
+        
+        <% end %>
+
+
+
+
+</td>
+       
+        <% User.where(:id => visitor_info.user_id  ).each do |i| %>
+         <% Establishment.where(:id => i.establishment_id).each do |x| %>
+        <td><%=  x.name %></td>
+        <% end %>
+        <% end %>
+        
+        <td style="color:#f00;"><%= visitor_info.Below_18 %></td>
+        <td style="color:#0066ff;"><%= visitor_info.age18_24 %></td>
+        <td style="color:#f00;"><%= visitor_info.age25_34 %></td>
+        <td style="color:#0066ff;"><%= visitor_info.age35_44 %></td>
+        <td style="color:#f00;"><%= visitor_info.age45_54 %></td>
+        <td style="color:#0066ff;"><%= visitor_info.age55_64 %></td>
+        <td style="color:#f00;"><%= visitor_info.age65 %></td>
+        <td style="color:#0066ff;"><%-j = visitor_info.Below_18.to_i + visitor_info.age18_24.to_i + visitor_info.age25_34.to_i + visitor_info.age35_44.to_i + visitor_info.age45_54.to_i + visitor_info.age55_64.to_i + visitor_info.age65.to_i%>  <%= j %>
+        </td>
+        
+          <% a << j.to_i %>
+      
+       <td style="color:#f00;">
+
+<% Country.where(:visitor_id => visitor_info.id  ).each do |k| %>
+
+	    <% $j = k.name %>
+	    <% $t = k.num_v %>
+
+
+            <%= $j  %> <br> 
+       
+       <% end %>
+
+</td>
+
+       <td style="color:#f00;">
+
+<% Country.where(:visitor_id => visitor_info.id  ).each do |k| %>
+
+	    <% $j = k.name %>
+	    <% $t = k.num_v %>
+
+
+            <%= $t  %><br> 
+       
+       <% end %>
+
+</td>
+
+      
+       
+      
+       <td style="color:#0066ff;">
+
+         <% Reason.where(:visitor_id => visitor_info.id  ).each do |l| %>
+
+	    <% $jj = l.reason %>
+	    <% $tt = l.nump %>
+         
+
+
+            <%= $jj  %>  <br>
+
+         <% end %>
+
+        </td>
+
+        <td style="color:#0066ff;">
+
+         <% Reason.where(:visitor_id => visitor_info.id  ).each do |l| %>
+
+	    <% $jj = l.reason %>
+	    <% $tt = l.nump %>
+         
+
+
+              <%= $tt  %><br>
+
+         <% end %>
+
+        </td>
+
+
+       <td style="color:#f00;">
+
+         <% SwaziVisitorInfo.where(:visitor_infor_id => visitor_info.id  ).each do |p| %>
+
+	    <% $jjj = p.place_of_residence %><br>
+	   
+         
+
+
+            <%= $jjj  %> 
+
+         <% end %>
+
+        </td>
+
+        <td>
+        <%-if($rc != "Nonswazi") %>
+         <%= j %>
+        <% end %>
+        </td>
+        
+    
+      </tr>
+      
+    <% end %>
+
+    <% yy = b.sum %>
+    <% yy1 = a.sum %>
+
+   <%-gg = yy * yy1 %>
+
+<tr><td colspan="20" style="color:#f00;"></td><td colspan="3"><b>Sum of visitors: <%= a.sum %></b></td><td colspan="3"><b>Total Revenue: <%= number_to_currency gg , unit: "E " %> </b></td>
+
+
+</tr>
+  </tbody>
+</table>
+<hr>
+
+<%= form_tag visitor_infos_path, method: :get do %>
+
+<%=  hidden_field_tag("start_date", value = params[:start_date]) %>
+
+
+
+<%= hidden_field_tag("end_date", value = params[:end_date]) %>
+
+<%= hidden_field_tag("search", value = params[:search])%>
+
+<%= hidden_field_tag("down", value = "Download")%>
+
+<%= button_tag :class => "btn btn-info btn-sm" do  %>
+          <i class="fa fa-download">
+          </i>
+      <% end %>
+
+<% end %>
+
+<hr>
+
+<% if params[:down].present? %>	
+      
+      <script>
+
+//table2excel.js
+;(function ( $, window, document, undefined ) {
+    var pluginName = "table2excel",
+
+    defaults = {
+        exclude: ".noExl",
+                name: "Table2Excel"
+    };
+
+    // The actual plugin constructor
+    function Plugin ( element, options ) {
+            this.element = element;
+            // jQuery has an extend method which merges the contents of two or
+            // more objects, storing the result in the first object. The first object
+            // is generally empty as we don't want to alter the default options for
+            // future instances of the plugin
+            //
+            this.settings = $.extend( {}, defaults, options );
+            this._defaults = defaults;
+            this._name = pluginName;
+            this.init();
+    }
+
+    Plugin.prototype = {
+        init: function () {
+            var e = this;
+
+			var utf8Heading = "<meta http-equiv=\"content-type\" content=\"application/vnd.ms-excel; charset=UTF-8\">";
+            e.template = {
+				head: "<html xmlns:o=\"urn:schemas-microsoft-com:office:office\" xmlns:x=\"urn:schemas-microsoft-com:office:excel\" xmlns=\"http://www.w3.org/TR/REC-html40\">" + utf8Heading + "<head><!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets>",
+                sheet: {
+                    head: "<x:ExcelWorksheet><x:Name>",
+                    tail: "</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet>"
+                },
+                mid: "</x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]--></head><body>",
+                table: {
+                    head: "<table>",
+                    tail: "</table>"
+                },
+                foot: "</body></html>"
+            };
+
+            e.tableRows = [];
+
+            // get contents of table except for exclude
+            $(e.element).each( function(i,o) {
+                var tempRows = "";
+                $(o).find("tr").not(e.settings.exclude).each(function (i,o) {
+                    tempRows += "<tr>" + $(o).html() + "</tr>";
+                });
+                e.tableRows.push(tempRows);
+            });
+
+            e.tableToExcel(e.tableRows, e.settings.name, e.settings.sheetName);
+        },
+
+        tableToExcel: function (table, name, sheetName) {
+            var e = this, fullTemplate="", i, link, a;
+
+            e.uri = "data:application/vnd.ms-excel;base64,";
+            e.base64 = function (s) {
+                return window.btoa(unescape(encodeURIComponent(s)));
+            };
+            e.format = function (s, c) {
+                return s.replace(/{(\w+)}/g, function (m, p) {
+                    return c[p];
+                });
+            };
+
+            sheetName = typeof sheetName === "undefined" ? "Sheet" : sheetName;
+
+            e.ctx = {
+                worksheet: name || "Worksheet",
+                table: table,
+                sheetName: sheetName,
+            };
+
+            fullTemplate= e.template.head;
+
+            if ( $.isArray(table) ) {
+                for (i in table) {
+                      //fullTemplate += e.template.sheet.head + "{worksheet" + i + "}" + e.template.sheet.tail;
+                      fullTemplate += e.template.sheet.head + sheetName + i + e.template.sheet.tail;
+                }
+            }
+
+            fullTemplate += e.template.mid;
+
+            if ( $.isArray(table) ) {
+                for (i in table) {
+                    fullTemplate += e.template.table.head + "{table" + i + "}" + e.template.table.tail;
+                }
+            }
+
+            fullTemplate += e.template.foot;
+
+            for (i in table) {
+                e.ctx["table" + i] = table[i];
+            }
+            delete e.ctx.table;
+
+            if (typeof msie !== "undefined" && msie > 0 || !!navigator.userAgent.match(/Trident.*rv\:11\./))      // If Internet Explorer
+            {
+                if (typeof Blob !== "undefined") {
+                    //use blobs if we can
+                    fullTemplate = [fullTemplate];
+                    //convert to array
+                    var blob1 = new Blob(fullTemplate, { type: "text/html" });
+                    window.navigator.msSaveBlob(blob1, getFileName(e.settings) );
+                } else {
+                    //otherwise use the iframe and save
+                    //requires a blank iframe on page called txtArea1
+                    txtArea1.document.open("text/html", "replace");
+                    txtArea1.document.write(e.format(fullTemplate, e.ctx));
+                    txtArea1.document.close();
+                    txtArea1.focus();
+                    sa = txtArea1.document.execCommand("SaveAs", true, getFileName(e.settings) );
+                }
+
+            } else {
+                link = e.uri + e.base64(e.format(fullTemplate, e.ctx));
+                a = document.createElement("a");
+                a.download = getFileName(e.settings);
+                a.href = link;
+
+                document.body.appendChild(a);
+
+                a.click();
+
+                document.body.removeChild(a);
+            }
+
+            return true;
+        }
+    };
+
+    function getFileName(settings) {
+		return ( settings.filename ? settings.filename : "table2excel" ) +
+			   ( settings.fileext ? settings.fileext : ".xlsx" );
+    }
+
+    $.fn[ pluginName ] = function ( options ) {
+        var e = this;
+            e.each(function() {
+                if ( !$.data( e, "plugin_" + pluginName ) ) {
+                    $.data( e, "plugin_" + pluginName, new Plugin( this, options ) );
+                }
+            });
+
+        // chain jQuery functions
+        return e;
+    };
+
+})( jQuery, window, document );
+
+
+
+
+
+
+
+
+			$(function() {
+				$("#x").table2excel({
+					exclude: ".noExl",
+					name: "Excel Document Name",
+					filename: "Exported Visitor Information Data",
+					fileext: ".xls",
+					exclude_img: true,
+					exclude_links: true,
+					exclude_inputs: true
+				});
+			});
+		</script>        
+
+
+<% end %>
+
+</div>
+
+<%= will_paginate @visitor_infos, :class => 'flickr_pagination' %>
+<br>
+<% else %>
+To display information please use the filter above
+<% end %>
+

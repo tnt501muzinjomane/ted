@@ -1,0 +1,2 @@
+module NumVisitorsHelper
+end

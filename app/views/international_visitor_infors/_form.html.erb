@@ -1,0 +1,59 @@
+<%= form_for @international_visitor_infor, :html => { :class => "form-horizontal international_visitor_infor" } do |f| %>
+
+    <% if @international_visitor_infor.errors.any? %>
+    <div id="error_expl" class="panel panel-danger">
+      <div class="panel-heading">
+        <h3 class="panel-title"><%= pluralize(@international_visitor_infor.errors.count, "error") %> prohibited this international_visitor_infor from being saved:</h3>
+      </div>
+      <div class="panel-body">
+        <ul>
+        <% @international_visitor_infor.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+        </ul>
+      </div>
+    </div>
+  <% end %>
+
+  <div class="control-group">
+    <%= f.label :africa, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.number_field :africa, :class => 'form-control' %>
+    </div>
+    <%= error_span(@international_visitor_infor[:africa]) %>
+  </div>
+  <div class="control-group">
+    <%= f.label :asia, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.number_field :asia, :class => 'form-control' %>
+    </div>
+    <%= error_span(@international_visitor_infor[:asia]) %>
+  </div>
+  <div class="control-group">
+    <%= f.label :america, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.number_field :america, :class => 'form-control' %>
+    </div>
+    <%= error_span(@international_visitor_infor[:america]) %>
+  </div>
+  <div class="control-group">
+    <%= f.label :europe, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.number_field :europe, :class => 'form-control' %>
+    </div>
+    <%= error_span(@international_visitor_infor[:europe]) %>
+  </div>
+  <div class="control-group">
+    <%= f.label :visitor_info_id, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.number_field :visitor_info_id, :class => 'form-control' %>
+    </div>
+    <%= error_span(@international_visitor_infor[:visitor_info_id]) %>
+  </div>
+  <br>
+
+  <%= f.submit nil, :class => 'btn btn-primary' %>
+  <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
+            international_visitor_infors_path, :class => 'btn btn-default' %>
+
+<% end %>

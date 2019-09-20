@@ -1,0 +1,41 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  surname: MyString
+  date_of_arrival: MyString
+  reason_for_vist: MyString
+  mode_of_transport: MyString
+  gender: MyString
+  travel: MyString
+  partner: MyString
+  citizenship: MyString
+  country: MyString
+  user_id: 1
+  Below_18: MyString
+  age18_24: MyString
+  age25_34: MyString
+  age35_44: MyString
+  age45_54: MyString
+  age55_64: MyString
+  age65: MyString
+
+two:
+  name: MyString
+  surname: MyString
+  date_of_arrival: MyString
+  reason_for_vist: MyString
+  mode_of_transport: MyString
+  gender: MyString
+  travel: MyString
+  partner: MyString
+  citizenship: MyString
+  country: MyString
+  user_id: 1
+  Below_18: MyString
+  age18_24: MyString
+  age25_34: MyString
+  age35_44: MyString
+  age45_54: MyString
+  age55_64: MyString
+  age65: MyString

@@ -1,0 +1,70 @@
+<div style="margin-top: 50px"><h1>Report</h1></div>
+
+
+
+<div class="alert-warning">
+  <h3>Report Filter</h3>
+  <br/>
+  <table class="noStyle">
+    <tr>
+      <td>
+        From:
+      </td>
+      <td>
+        <%= text_field_tag "date_picker" %>
+      </td>
+      <td>
+        To:
+      </td>
+      <td>
+        <%= text_field_tag "picker_date" %>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        On:
+      </td>
+      <td colspan="4">
+        <br/>
+
+        <%= select_tag "report_on", options_for_select(["Mlilwane", "National Museum", " 	Mahamba Gorge Lodge" , " 	Malolotja Gorge Lodge", " 	Mantenga Nature Reserve"]) %>
+      </td>
+    </tr>
+    <tr>
+      <td></td>
+      <td colspan="4">
+        <div id="rptFltr"></div>
+      </td>
+    </tr>
+  </table>
+  <div id="errorMessage"></div>
+</div>
+<br/>
+<br/>
+<%= link_to "Generate Report", "#", :class => 'btn btn-success', :id => "genReport" %>
+<br/>
+<br/>
+<div id="ResultCount"></div>
+<br/>
+<div id="reportResult"></div>
+
+
+<table id="establishments">
+  <thead>
+  <tr>
+    <th>ID</th>
+    <th>Name</th>
+    <th>Created at</th>
+  </tr>
+  </thead>
+  <tbody>
+  <% @establishments.each do |establishment| %>
+      <tr>
+        <td><%= link_to establishment.id, establishment_path(establishment) %></td>
+        <td><%= establishment.name %></td>
+        <td><%=l establishment.created_at %></td>
+        </td>
+      </tr>
+  <% end %>
+  </tbody>
+</table>

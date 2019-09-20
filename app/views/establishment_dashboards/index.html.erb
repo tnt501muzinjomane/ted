@@ -1,0 +1,197 @@
+<script>
+
+$(document).on('page:change', function () {
+    $('#start_date').datepicker({
+         
+        changeMonth: true,
+        changeYear: true,
+        dateFormat: "yy-mm-dd",
+        yearRange:  "1900:+0",
+        altFormat:  "yy-mm-dd",
+        duration:   "fast"
+        
+    }).datepicker("setDate", "0");
+});
+
+
+$(document).on('page:change', function () {
+    $('#end_date').datepicker({
+        changeMonth: true,
+        changeYear: true,
+        dateFormat: "yy-mm-dd",
+        yearRange:  "1900:+0",
+        altFormat:  "yy-mm-dd",
+        duration:   "fast"
+    }).datepicker("setDate", "0");
+});
+
+
+</script>
+
+<center><h1>STA Survey</h1>
+
+<% @user.each do |u| %>
+<% Establishment.where(:id => u.establishment_id).each do |h| %>
+<h2 style="color:#78B4F2;"><%= h.name %> </h2>
+<% end %>
+<% end %>
+</center>
+ <% if (current_user && current_user.role == "admin") %>
+ <%= javascript_include_tag "//www.google.com/jsapi", "chartkick" %>
+
+<div class="col-lg-12">
+<div class="well">
+
+<center>
+<b>Filter by date and establishment below</b>
+<br><br>
+<%= form_tag establishment_dashboards_path, :method => 'get', :id => "establishment_dashboards_search" do %>
+
+  From : <%=  text_field_tag("start_date") %>
+
+  To :
+
+  <%= text_field_tag("end_date") %>
+  
+  <select name="search">
+      <option value="">Please select establishment</option>
+      <%= @users.each do |u| %>
+
+      <% Establishment.where(:id => u.establishment_id  ).each do |z| %>
+
+        <option :search, params[:search] value="<%= u.id %>"> <%= z.name %> </option>
+       <% end %>
+      <% end %>
+    </select>
+
+    <%= button_tag :class => "btn btn-info btn-sm" do  %>
+          <i class="fa fa-search">
+          </i>
+      <% end %>
+    
+<% end %>
+
+</center>
+</div>
+</div>
+
+<%-if  params[:start_date].blank? && params[:end_date].blank? && params[:search].blank? %>
+<div class="col-lg-4">
+To display information please use the filter above
+</div>
+<% else %>
+
+
+<div class="col-lg-4">
+<div class="well">
+<h4 style="color:#78B4F2;">
+
+
+
+Type of visitors at <% @user.each do |u| %>
+<% Establishment.where(:id => u.establishment_id).each do |h| %>
+<%= h.name %>
+<% end %>
+<% end %></h4>
+
+<%= high_chart("some_id1", @chart7) %>
+
+<p style="color:#78B4F2;">[ <%= $j.to_i %> ] individuals
+[ <%= $k.to_i %> ] group members</p>
+
+
+</div>
+</div>
+
+<div class="col-lg-4">
+<div class="well">
+<h4 style="color:#78B4F2;"> 
+
+
+
+Gender at <% @user.each do |u| %>
+<% Establishment.where(:id => u.establishment_id).each do |h| %>
+<%= h.name %>
+<% end %>
+<% end %></h4>
+<%= high_chart("some_id8", @chart8) %>
+<p style="color:#78B4F2;">[ <%= $male.to_i %> ] males
+[ <%= $female.to_i %> ] female</p>
+</div>
+</div>
+
+
+<div class="col-lg-4">
+<div class="well">
+<h4 style="color:#78B4F2;">Age group at
+
+<% @user.each do |u| %>
+<% Establishment.where(:id => u.establishment_id).each do |h| %>
+<%= h.name %>
+<% end %>
+<% end %>
+
+</h4>
+<%= high_chart("some_id9", @chart9) %>
+<p style="color:#78B4F2; font-size:12px;">[ <%= $below18.to_i %> ] -18 [ <%= $age18_24.to_i %> ] 18-24  [ <%= $age25_34.to_i %> ] 25-34 [ <%= $age35_44.to_i %> ] 35-44 [ <%= $age45_54.to_i %> ] 45-54 [ <%= $age55_64.to_i %> ] 55-64 [ <%= $age65.to_i %> ] 65+yrs     </p>
+</div>
+</div>
+</div>
+
+
+
+<div class="col-lg-4">
+<div class="well">
+<h4 style="color:#78B4F2;">Reasons for visit at 
+
+<% @user.each do |u| %>
+<% Establishment.where(:id => u.establishment_id).each do |h| %>
+<%= h.name %>
+<% end %>
+<% end %>
+</h4>
+<%= high_chart("some_id78", @chart62) %>
+<p style="color:#78B4F2;">[ <%= $reas.to_i %> ] Recreaction/leisure
+[ <%= $reas2.to_i %> ] Educational [ <%= $reas4.to_i %> ] Research [ <%= $reas6.to_i %> ] Other</p>
+</div>
+</div>
+
+
+<div class="col-lg-4">
+<div class="well">
+<h4 style="color:#78B4F2;">Travel partnership  at 
+
+<% @user.each do |u| %>
+<% Establishment.where(:id => u.establishment_id).each do |h| %>
+<%= h.name %>
+<% end %>
+<% end %>
+
+
+</h4>
+<%= high_chart("some_id782", @chart63) %>
+
+<p style="color:#78B4F2;">[ <%= $pars.to_i %> ] Alone
+[ <%= $pars1.to_i %> ] With spouse/partner [ <%= $pars2.to_i %> ] With colleagues [ <%= $pars3.to_i %> ] With friends [ <%= $pars4.to_i %> ] With family [ <%= $pars5.to_i %> ] With children [ <%= $pars6.to_i %> ] With packaged tour [ <%= $pars7.to_i %> ] School tour [ <%= $pars8.to_i %> ] Other</p>
+</div>
+</div>
+
+<div class="col-lg-4">
+<div class="well">
+<h4 style="color:#78B4F2;">Mode of transport at 
+
+<% @user.each do |u| %>
+<% Establishment.where(:id => u.establishment_id).each do |h| %>
+<%= h.name %>
+<% end %>
+<% end %>
+ </h4>
+<%= high_chart("some_id98", @chart64) %>
+
+<p style="color:#78B4F2;">[ <%= $mos.to_i %> ] Personal car
+[ <%= $mos1.to_i %> ] Rental car [ <%= $mos2.to_i %> ] Tour bus [ <%= $mos3.to_i %> ] School bus [ <%= $mos4.to_i %> ] Motor bike [ <%= $mos5.to_i %> ] Other</p>
+</div>
+</div>
+
+<% end %>
+<% end %>

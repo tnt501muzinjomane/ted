@@ -1,0 +1,31 @@
+<h1>Listing reasons</h1>
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Reason</th>
+      <th>Nump</th>
+      <th>Citizen</th>
+      <th>User</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @reasons.each do |reason| %>
+      <tr>
+        <td><%= reason.reason %></td>
+        <td><%= reason.nump %></td>
+        <td><%= reason.citizen %></td>
+        <td><%= reason.user_id %></td>
+        <td><%= link_to 'Show', reason %></td>
+        <td><%= link_to 'Edit', edit_reason_path(reason) %></td>
+        <td><%= link_to 'Destroy', reason, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Reason', new_reason_path %>

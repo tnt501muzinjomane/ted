@@ -1,0 +1,14 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Visitor infor:</strong>
+  <%= @visitor_package.visitor_infor_id %>
+</p>
+
+<p>
+  <strong>Package:</strong>
+  <%= @visitor_package.package_id %>
+</p>
+
+<%= link_to 'Edit', edit_visitor_package_path(@visitor_package) %> |
+<%= link_to 'Back', visitor_packages_path %>

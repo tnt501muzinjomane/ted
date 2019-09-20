@@ -1,0 +1,41 @@
+<%= form_for(@transport) do |f| %>
+  <% if @transport.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@transport.errors.count, "error") %> prohibited this transport from being saved:</h2>
+
+      <ul>
+      <% @transport.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :trans %><br>
+    <%= f.text_field :trans %>
+  </div>
+  <div class="field">
+    <%= f.label :nump %><br>
+    <%= f.number_field :nump %>
+  </div>
+  <div class="field">
+    <%= f.label :citizen %><br>
+    <%= f.text_field :citizen %>
+  </div>
+  <div class="field">
+    <%= f.label :user_id %><br>
+    <%= f.number_field :user_id %>
+  </div>
+  <div class="field">
+    <%= f.label :rdate %><br>
+    <%= f.text_field :rdate %>
+  </div>
+  <div class="field">
+    <%= f.label :visitor_id %><br>
+    <%= f.number_field :visitor_id %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

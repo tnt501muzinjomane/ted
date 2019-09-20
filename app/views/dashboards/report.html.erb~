@@ -1,0 +1,45 @@
+<h1>Sent Message Reports</h1>
+<br/>
+<br/>
+<div class="alert">
+  <h3>Report Filter</h3>
+  <br/>
+  <table class="noStyle">
+    <tr>
+      <td>
+        From:
+      </td>
+      <td>
+        <%= text_field_tag "from" %>
+      </td>
+      <td>
+        To:
+      </td>
+      <td>
+        <%= text_field_tag "to" %>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        On:
+      </td>
+      <td colspan="4">
+        <%= select_tag "report_on", options_for_select(["All Sent Messages", "All Failed Messages", "By Group" , "By Contact", "By User (contacts)"]) %>
+      </td>
+    </tr>
+    <tr>
+      <td></td>
+      <td colspan="4">
+        <div id="rptFltr"></div>
+      </td>
+    </tr>
+  </table>
+  <div id="errorMessage"></div>
+</div>
+<%= link_to "Generate Report", "#", :class => 'btn btn-success', :id => "genReport" %>
+<br/>
+<br/>
+<div id="ResultCount"></div>
+<br/>
+<div id="reportResult"></div>
+

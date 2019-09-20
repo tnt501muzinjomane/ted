@@ -1,0 +1,2 @@
+module InternationalVisitorInforsHelper
+end

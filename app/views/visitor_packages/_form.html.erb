@@ -1,0 +1,25 @@
+<%= form_for(@visitor_package) do |f| %>
+  <% if @visitor_package.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@visitor_package.errors.count, "error") %> prohibited this visitor_package from being saved:</h2>
+
+      <ul>
+      <% @visitor_package.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :visitor_infor_id %><br>
+    <%= f.number_field :visitor_infor_id %>
+  </div>
+  <div class="field">
+    <%= f.label :package_id %><br>
+    <%= f.number_field :package_id %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

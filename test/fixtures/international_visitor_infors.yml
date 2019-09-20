@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  africa: MyString
+  asia: MyString
+  america: MyString
+  europe: MyString
+  visitor_info_id: 1
+
+two:
+  africa: MyString
+  asia: MyString
+  america: MyString
+  europe: MyString
+  visitor_info_id: 1

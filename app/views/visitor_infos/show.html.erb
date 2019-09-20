@@ -1,0 +1,53 @@
+<%- model_class = VisitorInfo -%>
+<div class="page-header">
+  <h1><%=t '.title', :default => model_class.model_name.human.titleize %></h1>
+</div>
+
+<dl class="dl-horizontal">
+  <dt><strong><%= model_class.human_attribute_name(:name) %>:</strong></dt>
+  <dd><%= @visitor_info.name %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:surname) %>:</strong></dt>
+  <dd><%= @visitor_info.surname %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:date_of_arrival) %>:</strong></dt>
+  <dd><%= @visitor_info.date_of_arrival %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:reason_for_vist) %>:</strong></dt>
+  <dd><%= @visitor_info.reason_for_vist %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:mode_of_transport) %>:</strong></dt>
+  <dd><%= @visitor_info.mode_of_transport %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:gender) %>:</strong></dt>
+  <dd><%= @visitor_info.gender %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:travel) %>:</strong></dt>
+  <dd><%= @visitor_info.travel %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:partner) %>:</strong></dt>
+  <dd><%= @visitor_info.partner %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:citizenship) %>:</strong></dt>
+  <dd><%= @visitor_info.citizenship %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:country) %>:</strong></dt>
+  <dd><%= @visitor_info.country %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:user_id) %>:</strong></dt>
+  <dd><%= @visitor_info.user_id %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:Below_18) %>:</strong></dt>
+  <dd><%= @visitor_info.Below_18 %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:age18_24) %>:</strong></dt>
+  <dd><%= @visitor_info.age18_24 %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:age25_34) %>:</strong></dt>
+  <dd><%= @visitor_info.age25_34 %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:age35_44) %>:</strong></dt>
+  <dd><%= @visitor_info.age35_44 %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:age45_54) %>:</strong></dt>
+  <dd><%= @visitor_info.age45_54 %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:age55_64) %>:</strong></dt>
+  <dd><%= @visitor_info.age55_64 %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:age65) %>:</strong></dt>
+  <dd><%= @visitor_info.age65 %></dd>
+</dl>
+
+<%= link_to t('.back', :default => t("helpers.links.back")),
+              visitor_infos_path, :class => 'btn btn-default'  %>
+<%= link_to t('.edit', :default => t("helpers.links.edit")),
+              edit_visitor_info_path(@visitor_info), :class => 'btn btn-default' %>
+<%= link_to t('.destroy', :default => t("helpers.links.destroy")),
+              visitor_info_path(@visitor_info),
+              :method => 'delete',
+              :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
+              :class => 'btn btn-danger' %>

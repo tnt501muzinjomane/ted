@@ -1,0 +1,9 @@
+class VisitorInfoController < ApplicationController
+
+
+  def index
+    
+    @establishments = Establishment.all
+  end
+
+end

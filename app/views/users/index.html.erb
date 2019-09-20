@@ -1,0 +1,46 @@
+<h1> System Users</h1>
+<hr>
+
+
+<table class='table table-striped'>
+<th>Id
+<th>Name
+<th>Surname
+<th>Email
+<th>Role
+<th style="color:#f00;">Code
+<th>Establishment
+<th>Action
+<% @users.each do |u| %>
+
+
+<tr>
+
+<td><%= link_to u.id, user_path(u) %></td>
+<td><%= u.name %></td>
+<td><%= u.surname %></td>
+<td><%= u.email %></td>
+<td><%= u.role %></td>
+<td style="color:#f00;"><%= u.unique_code %></td>
+
+
+
+
+<td>
+  <% @establishments = Establishment.where(:id => u.establishment_id).each do |e| %>
+  <%= e.name %>
+  <% end %>
+      </td>
+
+<td><%= link_to t('.edit', :default => t("helpers.links.edit")),
+                      edit_user_path(u), :class => 'btn btn-default btn-xs' %>
+
+
+<%= popupmsg_customize_link("Delete", "Deleting the user will remove it from the system. <p><br> Are you sure you want to continue?",user_path(u)) %>
+
+</td>
+
+</tr>
+
+<% end %>
+</table>
